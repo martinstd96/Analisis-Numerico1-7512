@@ -46,13 +46,31 @@ def obtener_sumatoria_simple():
 
     for i in range(1, 26 + 1):
         y = np.float32( (-1) ** i )
-        z = np.float32( x ** (2 * i) )
-        u = np.float32( math.factorial(2 * i) )
-        v = np.float32( z / u )
+
+        if i > 17: #con i >= 18 explota si no hacemos asi
+            v = factorizar( x, 2 * i, np.float32(2 * i) )
+
+        else:
+            z = np.float32( x ** (2 * i) )
+            u = np.float32( math.factorial(2 * i) )
+            v = np.float32( z / u )
+
         k = np.float32( y * v )
         suma += np.float32(k)
 
     return suma
+
+def factorizar(x, potencia, y):
+    cociente = np.float32(1)
+    resto = y
+
+    for i in range(potencia):
+        z = np.float32(x / resto)
+        cociente = np.float32(cociente * z)
+        resto -= np.float32(1)
+
+    return cociente
+
 
 def obtener_digitos_simple_decimal():
     s = np.float32(1)
