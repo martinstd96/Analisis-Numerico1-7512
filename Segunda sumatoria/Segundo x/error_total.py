@@ -13,7 +13,6 @@ def error_total():
     print( "El error total relativo es: {}".format(error_relativo) )
     x = 100488 * ( 10 ** (-4) ) + 102889 * ( 10 ** (-5) )
     sumatoria = math.fabs( obtener_sumatoria(x, 25) )
-    print(sumatoria)
     print( "El error total absoluto es: {}".format(sumatoria * error_relativo) )
 
 error_total()

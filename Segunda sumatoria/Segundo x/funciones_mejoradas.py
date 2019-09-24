@@ -4,20 +4,12 @@ import math
 def obtener_sumatoria_mejorada(x, n):
     suma = 0
 
-    for i in range(1, n + 1,2):
-        y = (-1/4) ** i
-        z = x ** (2 * i)
-        u = ( math.factorial(i) ) ** 2
-        v = z / u
+    for i in range(1, n + 1):
+        y = (-1 / 4) ** i
+        v = factorizar(x, i, 2 * i)
         k = y * v
-        #-------------------------
-        y_sig =  (-1 / 4) ** (i+1) 
-        z_sig =  x ** (2 * (i+1)) 
-        u_sig =  ( math.factorial(i+1) ) ** 2 
-        v_sig =  z_sig / u_sig 
-        sig =  y_sig * v_sig 
+        suma += k
 
-        suma += k + sig
     return suma
 
 def obtener_termino_estabilidad_mejorado():
@@ -36,20 +28,11 @@ def obtener_sumatoria_doble_mejorada():
     x = np.float64( 100488 * ( 10 ** (-4) ) + 102889 * ( 10 ** (-5) ) )
     suma = np.float64(0)
 
-    for i in range(1, 25 + 1  ,2):
-        y = np.float64( (-1 / 4) ** i )
-        z = np.float64( x ** (2 * i) )
-        u = np.float64( ( math.factorial(i) ) ** 2 )
-        v = np.float64( z / u )
-        k = np.float64( y * v )
-        #----------------------
-        y_sig = np.float64( (-1 / 4) ** (i+1) )
-        z_sig = np.float64( x ** (2 * (i+1)) )
-        u_sig = np.float64( ( math.factorial(i+1) ) ** 2 )
-        v_sig = np.float64( z_sig / u_sig )
-        sig = np.float64( y_sig * v_sig )
-
-        suma += np.float64(k) + sig
+    for i in range(1, 25 + 1):
+        y = (-1 / 4) ** i
+        v = factorizar_doble(x, i, 2 * i)
+        k = y * v
+        suma += k
 
     return suma
 
@@ -57,42 +40,61 @@ def obtener_sumatoria_simple_mejorada():
     x = np.float32( 100488 * ( 10 ** (-4) ) + 102889 * ( 10 ** (-5) ) )
     suma = np.float32(0)
 
-    for i in range(1, 25 +1  ,2):
-        y = np.float32( (-1 / 4) ** i )
-        if i > 18: #con i >= 19 explota si no hacemos asi
-            v = factorizar(x, i, 2 * i)
-            v_sig = factorizar(x , i-1 , 2*(i+1))
-
-        else:
-            z = np.float32( x ** (2 * i) )
-            u = np.float32( ( math.factorial(i) ) ** 2 )
-            v = np.float32( z / u )
-            #-----------------------
-            z_sig = np.float32( x ** (2 * (i+1)) )
-            u_sig = np.float32( ( math.factorial(i+1) ) ** 2 )
-            v_sig = np.float32( z_sig / u_sig )
-
-        k = np.float32( y * v )
-        #----------------------------
-        y_sig = np.float32( (-1 / 4) ** (i+1) )
-        
-        sig = np.float32( y_sig * v_sig )
-
-        suma += np.float32(k) + sig
+    for i in range(1, 25 + 1):
+        y = (-1 / 4) ** i
+        v = factorizar_simple(x, i, 2 * i)
+        k = y * v
+        suma += k
 
     return suma
 
-def factorizar(x, potencia, y):
+def factorizar_simple(x, y, potencia):
     cociente = np.float32(1)
-    resto = y
+    i = y
+    k = potencia
 
-    for i in range(potencia):
-        z = np.float32(x / resto)
+    while i > 0:
+        divisor = np.float32(i ** 2)
+        z = np.float32(x / divisor)
         cociente = np.float32(cociente * z)
-        resto -= np.float32(1)
+        i -= 1
+        k -= 1
 
+    x = np.float32(x ** k)
+    cociente = np.float32(cociente * x)
     return cociente
 
+def factorizar_doble(x, y, potencia):
+    cociente = np.float64(1)
+    i = y
+    k = potencia
+
+    while i > 0:
+        divisor = np.float64(i ** 2)
+        z = np.float64(x / divisor)
+        cociente = np.float64(cociente * z)
+        i -= 1
+        k -= 1
+
+    x = np.float64(x ** k)
+    cociente = np.float64(cociente * x)
+    return cociente
+
+def factorizar(x, y, potencia):
+    cociente = 1
+    i = y
+    k = potencia
+
+    while i > 0:
+        divisor = i ** 2
+        z = x / divisor
+        cociente = cociente * z
+        i -= 1
+        k -= 1
+
+    x = x ** k
+    cociente = cociente * x
+    return cociente
 
 def obtener_digitos_simple_decimal():
     s = np.float32(1)
