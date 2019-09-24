@@ -5,14 +5,7 @@ from funciones_en_comun import obtener_sumatoria
 
 def error_total():
     cp = obtener_condicion_problema()
-
-    print("cp: {}".format(cp))
-    
     te, mu = obtener_termino_estabilidad()
-    
-    print("te: {}".format(te))
-    print("mu: {}".format(mu))
-    
     r = 1 * ( 10 ** (-4) )
     x = cp * r
     y = te * mu
@@ -20,7 +13,6 @@ def error_total():
     print( "El error total relativo es: {}".format(error_relativo) )
     x = 100488 * ( 10 ** (-4) ) + 102889 * ( 10 ** (-5) )
     sumatoria = math.fabs( obtener_sumatoria(x, 26) )
-    print(sumatoria)
     print( "El error total absoluto es: {}".format(sumatoria * error_relativo) )
 
 error_total()
