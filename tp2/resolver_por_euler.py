@@ -1,11 +1,11 @@
 from mostrar import mostrar
+from funciones import funcion_uno
+from funciones import funcion_dos
 
 def resolver_por_euler():
     lista_u = []
     lista_v = []
     lista_t = []
-    alfa = (100488 + 102889) / 2
-    beta = 200.4
     semilla_u = 1
     semilla_v = 10
     h = 1.6 * ( 10 ** (-5) )
@@ -14,10 +14,10 @@ def resolver_por_euler():
     lista_v.append(semilla_v)
 
     while contador < 62500:
-        semilla_u = semilla_u + (h * semilla_v)
-        calculo_auxiliar_1 = -1 * (beta * semilla_u)
-        calculo_auxiliar_2 = -1 * (alfa * semilla_v)
-        semilla_v = semilla_v + h * (calculo_auxiliar_1 + (calculo_auxiliar_2) + 1)
+        semilla_u_paso_siguiente = semilla_u + ( h * funcion_uno(semilla_v) )
+        semilla_v_paso_siguiente = semilla_v + h * ( funcion_dos(semilla_u, semilla_v) )
+        semilla_u = semilla_u_paso_siguiente
+        semilla_v = semilla_v_paso_siguiente
         lista_u.append(semilla_u)
         lista_v.append(semilla_v)
         contador += 1
