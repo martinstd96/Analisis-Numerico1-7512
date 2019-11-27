@@ -36,7 +36,7 @@ def resolver_por_euler_runge_kutta2():
         maximo_valor_h = 1.967 * ( 10 ** (-5) )
         minimo_valor_h = 1 * ( 10 ** (-15) )
 
-        if error_local == 0: h /= 2
+        if error_local == 0: h *= 2
 
         else: h = 0.8 * h * ((tol * h) / error_local)
 
