@@ -11,7 +11,7 @@ def resolver_por_euler_runge_kutta2():
     semilla_v = 10
     h = 1.6 * ( 10 ** (-5) )
     tol = 1 * ( 10 ** (-4) )
-    contador = 0
+    iteraciones = 0
 
     while t < 1:
         euler_u = semilla_u + ( h * funcion_uno(semilla_v) )
@@ -30,7 +30,6 @@ def resolver_por_euler_runge_kutta2():
             lista_v.append(semilla_v)
             lista_t.append(t)
             t += h
-            contador += 1
 
         h_previo = h
         maximo_valor_h = 1.967 * ( 10 ** (-5) )
@@ -48,7 +47,9 @@ def resolver_por_euler_runge_kutta2():
 
         if h > maximo_valor_h: h = maximo_valor_h
 
+        iteraciones += 1
+
     mostrar(lista_u, lista_v, lista_t)
-    print(contador)
+    print(iteraciones)
 
 resolver_por_euler_runge_kutta2()
